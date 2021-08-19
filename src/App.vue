@@ -7,9 +7,18 @@
         apiKey=""
         :mapConfig="mapConfig"
       >
-        <template slot-scope="{ map }">
+        <template slot-scope="{ google, map }">
+          <GoogleMapMarker
+            v-for="marker in markers"
+            :key="marker.id"
+            :marker="marker"
+            :google="google"
+            :map="map"
+            :show="showMarkers"
+          />
           <div>
             <button @click="centerMap(map)">Center</button>
+            <button @click="showMarkers = !showMarkers">Show Markers</button>
           </div>
         </template>
       </GoogleMapLoader>
@@ -19,23 +28,30 @@
 
 <script>
 import GoogleMapLoader from './components/GoogleMapLoader.vue'
+import GoogleMapMarker from './components/GoogleMapMarker.vue'
 
 export default {
   name: 'App',
   components: {
-    GoogleMapLoader
+    GoogleMapLoader,
+    GoogleMapMarker
   },
   data() {
     return {
-      center: { lat: 19.48698, lng: -99.18594 },
       mapConfig: {
         center: { lat: 19.48698, lng: -99.18594 },
         zoom: 13
-      }
+      },
+      markers: [
+        { id: "a", position: { lat: 19.48698, lng: -99.18594 } },
+        { id: "b", position: { lat: 19.50, lng: -99.186 } },
+        { id: "c", position: { lat: 19.51, lng: -99.1861 } }
+      ],
+      showMarkers: true
     }
   },
   methods: {
-    centerMap(map) { map.setCenter(this.center) }
+    centerMap(map) { map.setCenter(this.mapConfig.center) }
   }
 }
 </script>
