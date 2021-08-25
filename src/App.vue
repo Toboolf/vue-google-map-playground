@@ -9,16 +9,27 @@
       >
         <template slot-scope="{ google, map }">
           <GoogleMapMarker
-            v-for="marker in markers"
+            v-for="marker in trees"
             :key="marker.id"
             :marker="marker"
             :google="google"
             :map="map"
-            :show="showMarkers"
+            :show="show.trees"
+            icon="tree.png"
+          />
+          <GoogleMapMarker
+            v-for="marker in drops"
+            :key="marker.id"
+            :marker="marker"
+            :google="google"
+            :map="map"
+            :show="show.drops"
+            icon="drop.png"
           />
           <div>
             <button @click="centerMap(map)">Center</button>
-            <button @click="showMarkers = !showMarkers">Show Markers</button>
+            <button @click="show.trees = !show.trees">{{show.trees ? 'Show':'Hide'}} Trees</button>
+            <button @click="show.drops = !show.drops">{{show.drops ? 'Show':'Hide'}} drops</button>
           </div>
         </template>
       </GoogleMapLoader>
@@ -42,12 +53,20 @@ export default {
         center: { lat: 19.48698, lng: -99.18594 },
         zoom: 13
       },
-      markers: [
+      trees: [
         { id: "a", position: { lat: 19.48698, lng: -99.18594 } },
         { id: "b", position: { lat: 19.50, lng: -99.186 } },
         { id: "c", position: { lat: 19.51, lng: -99.1861 } }
       ],
-      showMarkers: true
+      drops: [
+        { id: "d", position: { lat: 19.49, lng: -99.20 } },
+        { id: "e", position: { lat: 19.50, lng: -99.21 } },
+        { id: "f", position: { lat: 19.51, lng: -99.22 } }
+      ],
+      show: {
+        trees: true,
+        drops: true
+      }
     }
   },
   methods: {
