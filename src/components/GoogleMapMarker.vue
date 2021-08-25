@@ -17,6 +17,10 @@ export default {
       type: Boolean,
       required: false,
       default: true
+    },
+    icon: {
+      type: String,
+      required: false
     }
   },
 
@@ -34,15 +38,37 @@ export default {
     }
   },
 
-  mounted() {
-    const { Marker } = this.google.maps;
+  methods: {
+    buildMarker() {
+      const { Marker } = this.google.maps;
 
-    this.self = new Marker({
-      position: this.marker.position,
-      marker: this.marker,
-      map: this.map,
-      //icon: POINT_MARKER_ICON_CONFIG
-    });
+      const makerDefinition = {
+        position: this.marker.position,
+        marker: this.marker,
+        map: this.map
+      }
+
+      if(this.icon) {
+        const markerIcon = {
+          url: require(`../assets/${this.icon}`),
+          size: new this.google.maps.Size(25, 25),
+          origin: new this.google.maps.Point(0, 0),
+          anchor: new this.google.maps.Point(10, 25),
+          scaledSize: new this.google.maps.Size(25, 25)
+        }
+        makerDefinition.icon = markerIcon
+      }
+
+      this.self = new Marker(makerDefinition);
+
+      this.self.addListener("click", () => {
+        console.log("me pinchaste");
+      });
+    }
+  },
+
+  mounted() {
+    this.buildMarker()
   },
 
   render() { return null }
