@@ -29,8 +29,8 @@ export default {
   }},
 
   watch: {
-    show() {
-      if (this.show) {
+    show: function() {
+      if (!this.show) {
         this.self.setMap(null)
       } else {
         this.self.setMap(this.map)
