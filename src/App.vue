@@ -1,13 +1,18 @@
 <template>
   <div id="app">
     <h1>Google Maps implementation with Vue JS</h1>
-    
+    <div id="kmlcontent"></div>
     <div>
       <GoogleMapLoader class="map-container"
-        apiKey=""
+        apiKey="AIzaSyCI1A_1VmLyt7lM5eUdLNCXJSuC36hnYSs"
         :mapConfig="mapConfig"
       >
-        <template slot-scope="{ google, map }">
+        <template slot-scope="{ google, map }">\
+          <GoogleMapKml
+            :google="google"
+            :map="map"
+            container="kmlcontent"
+            src="https://www.google.com/maps/d/u/1/kml?forcekml=1&mid=197LDSkNzpeIdBjgGBoGbMCylzitqnZyf"/>
           <GoogleMapMarker
             v-for="marker in trees"
             :key="marker.id"
@@ -40,12 +45,14 @@
 <script>
 import GoogleMapLoader from './components/GoogleMapLoader.vue'
 import GoogleMapMarker from './components/GoogleMapMarker.vue'
+import GoogleMapKml from './components/GoogleMapKml.vue'
 
 export default {
   name: 'App',
   components: {
     GoogleMapLoader,
-    GoogleMapMarker
+    GoogleMapMarker,
+    GoogleMapKml
   },
   data() {
     return {
