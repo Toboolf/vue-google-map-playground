@@ -60,11 +60,15 @@ export default {
       }
 
       this.self = new Marker(makerDefinition);
-
+      let copy = this
+      let markerCopy = this.marker 
       this.self.addListener("click", () => {
         console.log("me pinchaste");
+        copy.test(markerCopy)
+        console.log(this.show);
       });
-    }
+    },
+    test(info) { console.log( info ); }
   },
 
   mounted() {

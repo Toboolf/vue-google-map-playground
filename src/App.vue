@@ -35,6 +35,7 @@
             <button @click="centerMap(map)">Center</button>
             <button @click="show.trees = !show.trees">{{show.trees ? 'Show':'Hide'}} Trees</button>
             <button @click="show.drops = !show.drops">{{show.drops ? 'Show':'Hide'}} drops</button>
+            <button @click="changeTrees">Change trees</button>
           </div>
         </template>
       </GoogleMapLoader>
@@ -77,7 +78,21 @@ export default {
     }
   },
   methods: {
-    centerMap(map) { map.setCenter(this.mapConfig.center) }
+    centerMap(map) { map.setCenter(this.mapConfig.center) },
+    async changeTrees() {
+      this.show.trees = false
+      await this.sleep(2000)
+      console.log("timed out");
+      this.trees = [
+        { id: "x", position: { lat: 19.47, lng: -99.18594 } },
+        { id: "y", position: { lat: 19.46, lng: -99.186 } },
+        { id: "z", position: { lat: 19.45, lng: -99.1861 } }
+      ]
+      this.show.trees = true
+    },
+    sleep(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
   }
 }
 </script>
